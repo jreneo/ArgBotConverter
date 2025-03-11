@@ -1,4 +1,11 @@
+from pytube import YouTube
 
-def downloadFunction(params):
+
+def download(url : str) -> bool:
     print("Download function:")
-    print(params)
+
+    
+    if str:
+        return True
+    else:
+        return False

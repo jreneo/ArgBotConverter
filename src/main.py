@@ -4,7 +4,7 @@ import flet as ft
 from flet import TextField, Checkbox, ElevatedButton, Text, Row, Column
 from flet.core.control_event import ControlEvent
 
-
+from downloader import download
 print('project started')
 
 
@@ -19,13 +19,34 @@ def main(page: ft.Page) -> None: # Main Method
     page.window_resizable = False
 
     #import text
-    text_import: TextField = TextField(label='URL', text_align=ft.TextAlign.CENTER, width=300)
+    text_url: TextField = TextField(label='URL', text_align=ft.TextAlign.CENTER, width=300)
     button_submit: ElevatedButton = ElevatedButton(text="Import & Download",width=300, disabled=True)
     
+    def validate(e: ControlEvent) -> None:
+        # TODO: Validate input is good before turning on the button
+        if text_url.value:
+            button_submit.disabled = False
+        else:
+            button_submit.disabled = True
+        
+        page.update()
+
+    
+    def submit(e: ControlEvent) -> None:
+        print("URL to download: ", text_url.value)
+        download(text_url.value)
+    
+    text_url.on_change = validate
+    button_submit.on_click = submit
+
+
+
+
+
     page.add(
         Column(
             controls=[
-                text_import,
+                text_url,
                 button_submit
             ],
             alignment=ft.MainAxisAlignment.CENTER, 
@@ -34,6 +55,8 @@ def main(page: ft.Page) -> None: # Main Method
         )
     )
     page.update()
+
+
 
 
 if __name__ == "__main__":
