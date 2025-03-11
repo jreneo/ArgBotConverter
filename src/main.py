@@ -3,6 +3,7 @@
 import flet as ft
 from flet import TextField, Checkbox, ElevatedButton, Text, Row, Column
 from flet.core.control_event import ControlEvent
+import validators
 
 from downloader import download
 print('project started')
@@ -23,8 +24,8 @@ def main(page: ft.Page) -> None: # Main Method
     button_submit: ElevatedButton = ElevatedButton(text="Import & Download",width=300, disabled=True)
     
     def validate(e: ControlEvent) -> None:
-        # TODO: Validate input is good before turning on the button
-        if text_url.value:
+        url = text_url.value.strip() # gets rid of spaces
+        if validators.url(url) and url.startswith("https://www.youtube.com/watch?v"):
             button_submit.disabled = False
         else:
             button_submit.disabled = True
@@ -61,4 +62,3 @@ def main(page: ft.Page) -> None: # Main Method
 
 if __name__ == "__main__":
     ft.app(target=main)
-
