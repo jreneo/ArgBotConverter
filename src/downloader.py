@@ -1,7 +1,7 @@
 from pytubefix import YouTube
 from pytubefix.cli import on_progress
 
-def download(url : str) -> bool:
+def download(url : str,location : str):
     print("Download function:")
     try:
         yt = YouTube(
@@ -10,7 +10,7 @@ def download(url : str) -> bool:
         )
         print(yt.title)
         stream = yt.streams.get_highest_resolution()
-        stream.download()
+        stream.download(output_path=location)
         print("Downloading...")
         
         print("Download complete!")
